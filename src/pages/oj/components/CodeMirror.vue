@@ -31,7 +31,7 @@
       </div>
       </Col>
     </Row>
-    <codemirror :value="value" :options="options" @change="onEditorCodeChange" ref="myEditor">
+    <codemirror style="font-size: 16px" :value="value" :options="options" @change="onEditorCodeChange" ref="myEditor">
     </codemirror>
   </div>
 </template>
@@ -56,6 +56,10 @@
   import 'codemirror/addon/fold/foldgutter.js'
   import 'codemirror/addon/fold/brace-fold.js'
   import 'codemirror/addon/fold/indent-fold.js'
+
+  // addons
+  import 'codemirror/addon/edit/matchbrackets.js'
+  import 'codemirror/addon/edit/closebrackets.js'
 
   export default {
     name: 'CodeMirror',
@@ -86,6 +90,11 @@
       return {
         options: {
           // codemirror options
+          indentUnit: 4,
+          smartIndent: true,
+          styleActiveLine: true,
+          matchBrackets: true,
+          autoCloseBrackets: true,
           tabSize: 4,
           mode: 'text/x-csrc',
           theme: 'solarized',
@@ -182,7 +191,7 @@
     height: auto !important;
   }
   .CodeMirror-scroll {
-    min-height: 300px;
+    min-height: 500px;
     max-height: 1000px;
   }
 </style>
