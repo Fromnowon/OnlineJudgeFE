@@ -58,6 +58,13 @@
 
 <style lang="less">
 
+  img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
