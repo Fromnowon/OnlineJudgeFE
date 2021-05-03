@@ -298,7 +298,8 @@
             return
           }
           // try to load problem template
-          this.language = this.problem.languages[0]
+          // this.language = this.problem.languages[0]
+          this.language = 'C++'
           let template = this.problem.template
           if (template && template[this.language]) {
             this.code = template[this.language]
