@@ -3,7 +3,13 @@
     <div id="problem-main">
       <!--problem main-->
       <Panel :padding="40" shadow>
-        <div slot="title">{{problem.title}}</div>
+        <div slot="title">
+          {{problem.title}}
+          <div style="float: right" v-if="isAdminRole">
+            <Button type="primary" size="small" @click="goEdit">编 辑</Button>
+            <Button size="small" type="ghost" @click="getTestcase">数 据</Button>  
+          </div>  
+        </div>
         <div id="problem-content" class="markdown-body" v-katex  v-highlight>
           <p class="title">{{$t('m.Description')}}</p>
           <p class="content" v-html=problem.description></p>
@@ -208,6 +214,7 @@
   import {JUDGE_STATUS, CONTEST_STATUS, buildProblemCodeKey} from '@/utils/constants'
   import api from '@oj/api'
   import {pie, largePie} from './chartData'
+  import utils from '@/utils/utils'
 
   // 只显示这些状态的图形占用
   const filtedStatus = ['-1', '-2', '0', '1', '2', '3', '4', '8']
@@ -277,6 +284,13 @@
     },
     methods: {
       ...mapActions(['changeDomTitle']),
+      goEdit () {
+        window.open('/admin/problem/edit/' + this.problem.id, '_blank')
+      },
+      getTestcase () {
+        let url = '/admin/test_case?problem_id=' + this.problem.id
+        utils.downloadFile(url)
+      },
       init () {
         this.$Loading.start()
         this.contestID = this.$route.params.contestID
@@ -488,6 +502,9 @@
         } else {
           return {name: 'submission-list', query: {problemID: this.problemID}}
         }
+      },
+      isAdminRole () {
+        return this.$store.getters.isAdminRole
       }
     },
     beforeRouteLeave (to, from, next) {
