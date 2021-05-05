@@ -37,8 +37,7 @@ export default {
             {
               name: "menu0",
               text: "Tip：",
-              action(editor) {
-              },
+              action(editor) {},
             },
             {
               name: "menu1",
@@ -111,8 +110,7 @@ export default {
             {
               name: "menu5",
               text: "快捷：",
-              action(editor) {
-              },
+              action(editor) {},
             },
             {
               name: "menu6",
@@ -155,6 +153,72 @@ export default {
                 editor.insert(function (selected) {
                   const prefix = "<span style='color: red'>";
                   const suffix = "</span>";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+            {
+              name: "menu9",
+              text: "重制",
+              action(editor) {
+                var converter = document.createElement("DIV");
+                converter.innerHTML = editor.value;
+                editor.value = converter.innerText;
+                converter = null;
+              },
+            },
+            {
+              name: "menu10",
+              text: "Katex：",
+              action() {},
+            },
+            {
+              name: "menu11",
+              text: "行内",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = " $";
+                  const suffix = "$ ";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+            {
+              name: "menu12",
+              text: "上标",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = " ^";
+                  const suffix = "^ ";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+            {
+              name: "menu12",
+              text: "下标",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = " _";
+                  const suffix = "_ ";
                   const placeholder = "请输入文本";
                   const content = selected || placeholder;
 
@@ -208,8 +272,6 @@ export default {
     value(val) {
       if (this.currentValue !== val) {
         this.currentValue = utils.html_decode(val);
-        console.log(utils.html_decode(val))
-        console.log(val)
       }
     },
     currentValue(newVal, oldVal) {

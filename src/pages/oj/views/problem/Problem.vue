@@ -457,7 +457,6 @@
         this.debugging = true
         this.stdout = ''
         if (this.stdin == '') this.stdin = this.problem.samples[0].input
-        console.log(this.stdin)
         axios
           .post(
             "https://api.zzh.today/ide/submissions/?base64_encoded=true&wait=false",
