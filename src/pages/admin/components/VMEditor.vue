@@ -131,18 +131,35 @@ export default {
             },
             {
               name: "menu7",
-              text: "重制",
+              text: "代码",
               action(editor) {
-                var converter = document.createElement("DIV");
-                converter.innerHTML = editor.value;
-                editor.value = converter.innerText;
-                converter = null;
-              },
+                const prefix = " ```";
+                const suffix = "``` ";
+                const placeholder = "请输入文本";
+                const content = selected || placeholder;
+
+                return {
+                  text: `${prefix}${content}${suffix}`,
+                  selected: content,
+                };
+              }
             },
             {
               name: "menu8",
-              text: "",
-              action(editor) {}
+              text: "重制",
+              action(editor) {
+                console.log(editor)
+                var converter = document.createElement("DIV");
+                converter.innerHTML = editor.value;
+                editor.clear()
+                editor.insert(function () {
+                  return {
+                    text: `${converter.innerText}`
+                  };
+                });
+                converter = null;
+                console.log(editor)
+              },
             },
             {
               name: "menu9",
@@ -247,6 +264,7 @@ export default {
   },
   watch: {
     value(val) {
+      console.log(12212)
       if (this.currentValue !== val) {
         this.currentValue = utils.html_decode(val);
       }
