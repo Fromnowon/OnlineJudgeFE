@@ -1,3 +1,10 @@
+## 新增、修改功能：
+
++  界面默认中文，代码提交默认C++
++  网页代码编辑器体验优化，可在线运行代码获取结果
++  后台富文本编辑器更换为v-md-editor，现在markdown编写与渲染更给力了
++  细节优化
+
 # OnlineJudge Front End
 [![vue](https://img.shields.io/badge/vue-2.5.13-blue.svg?style=flat-square)](https://github.com/vuejs/vue)
 [![vuex](https://img.shields.io/badge/vuex-3.0.1-blue.svg?style=flat-square)](https://vuex.vuejs.org/)
