@@ -57,7 +57,9 @@
 </script>
 
 <style lang="less">
-
+  .katex {
+    text-align: left !important;
+  }
   img {
     width: auto;
     height: auto;

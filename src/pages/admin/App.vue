@@ -20,7 +20,9 @@
     -webkit-font-smoothing: antialiased;
     background-color: #324157;
   }
-
+  .katex {
+    text-align: left !important;
+  }
   #app {
     position: absolute;
     top: 0;

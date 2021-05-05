@@ -10,15 +10,18 @@
             <Button size="small" type="ghost" @click="getTestcase">数 据</Button>  
           </div>  
         </div>
-        <div id="problem-content" class="markdown-body" v-katex  v-highlight>
+        <div id="problem-content" class="markdown-body" v-katex>
           <p class="title">{{$t('m.Description')}}</p>
-          <p class="content" v-html=problem.description></p>
+          <!-- <p class="content" v-html=problem.description></p> -->
+          <v-md-editor :value="htmlDecode(problem.description)" mode="preview"></v-md-editor>
           <!-- {{$t('m.music')}} -->
           <p class="title">{{$t('m.Input')}} <span v-if="problem.io_mode.io_mode=='File IO'">({{$t('m.FromFile')}}: {{ problem.io_mode.input }})</span></p>
-          <p class="content" v-html=problem.input_description></p>
+          <!-- <p class="content" v-html=problem.input_description></p> -->
+          <v-md-editor :value="htmlDecode(problem.input_description)" mode="preview"></v-md-editor>
 
           <p class="title">{{$t('m.Output')}} <span v-if="problem.io_mode.io_mode=='File IO'">({{$t('m.ToFile')}}: {{ problem.io_mode.output }})</span></p>
-          <p class="content" v-html=problem.output_description></p>
+          <!-- <p class="content" v-html=problem.output_description></p> -->
+          <v-md-editor :value="htmlDecode(problem.output_description)" mode="preview"></v-md-editor>
 
           <div v-for="(sample, index) of problem.samples" :key="index">
             <div class="flex-container sample">
@@ -43,7 +46,8 @@
           <div v-if="problem.hint">
             <p class="title">{{$t('m.Hint')}}</p>
             <Card dis-hover>
-              <div class="content" v-html=problem.hint></div>
+              <!-- <div class="content" v-html=problem.hint></div> -->
+              <v-md-editor :value="htmlDecode(problem.hint)" mode="preview"></v-md-editor>
             </Card>
           </div>
 
@@ -97,11 +101,25 @@
               </div>
             </template>
             <Button type="warning" icon="edit" :loading="submitting" @click="submitCode"
-                    :disabled="problemSubmitDisabled || submitted"
+                    :disabled="problemSubmitDisabled || submitted || debugging"
                     class="fl-right">
               <span v-if="submitting">{{$t('m.Submitting')}}</span>
               <span v-else>{{$t('m.Submit')}}</span>
             </Button>
+            <Button type="default" icon="bug" :loading="debugging" @click="debug"
+                    :disabled="problemSubmitDisabled || submitted"
+                    class="fl-right" style="margin-right: 20px">
+              <span v-if="debugging">运行中</span>
+              <span v-else>调试</span>
+            </Button>
+          </Col>
+
+          <Col :span="24" v-if="debugged">
+              <div style="max-width: 1000px; margin-top: 20px">
+                <Input v-model="stdin" type="textarea" :autosize="{minRows: 3,maxRows: 20}" style="width: 100%"></Input>
+                <!-- <v-md-editor v-if="stdout.length > 0" :value="stdout" mode="preview"></v-md-editor> -->
+                <pre style="margin-top: 20px; padding: 10px; background: #e9eaec; max-height: 500px; overflow: auto" v-if="stdout.length > 0" v-html="stdout"></pre>
+              </div>
           </Col>
         </Row>
       </Card>
@@ -215,9 +233,22 @@
   import api from '@oj/api'
   import {pie, largePie} from './chartData'
   import utils from '@/utils/utils'
+  import {Base64} from 'js-base64'
+  import axios from 'axios'
 
   // 只显示这些状态的图形占用
   const filtedStatus = ['-1', '-2', '0', '1', '2', '3', '4', '8']
+
+  // 语言
+  const lang = {
+    'C++': 54,
+    'C': 50,
+    'Golang': 60,
+    'Java': 62,
+    'Python2': 70,
+    'Python3': 71
+  }
+
 
   export default {
     name: 'Problem',
@@ -236,6 +267,10 @@
         contestID: '',
         problemID: '',
         submitting: false,
+        debugging: false,
+        debugged: false,
+        stdin: '',
+        stdout: '',
         code: '',
         language: 'C++',
         theme: 'solarized',
@@ -284,6 +319,9 @@
     },
     methods: {
       ...mapActions(['changeDomTitle']),
+      htmlDecode (s) {
+        return utils.html_decode(s)
+      },
       goEdit () {
         window.open('/admin/problem/edit/' + this.problem.id, '_blank')
       },
@@ -409,6 +447,88 @@
           })
         }
         this.refreshStatus = setTimeout(checkStatus, 2000)
+      },
+      debug () {
+        if (this.code.trim() === '') {
+          this.$error(this.$i18n.t('m.Code_can_not_be_empty'))
+          return
+        }
+        if (!this.debugged) this.debugged = true
+        this.debugging = true
+        this.stdout = ''
+        if (this.stdin == '') this.stdin = this.problem.samples[0].input
+        console.log(this.stdin)
+        axios
+          .post(
+            "https://api.zzh.today/ide/submissions/?base64_encoded=true&wait=false",
+            {
+              source_code: Base64.encode(this.code),
+              language_id: lang[this.language],
+              stdin: Base64.encode(this.stdin),
+            },
+            { timeout: 5000 }
+          )
+          .then((response) => {
+            this.getResult(response.data.token);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.debugging = false;
+            this.$alert("请求异常，服务器无响应", "错误", {
+              confirmButtonText: "确定",
+              type: "error",
+            });
+          });
+      },
+      getResult (token) {
+        const _this = this;
+        setTimeout(() => {
+          axios
+            .get(
+                "https://api.zzh.today/ide/submissions/" +
+                token +
+                "?base64_encoded=true"
+            )
+            .catch((error) => {
+              console.log(error);
+              _this.debugging = false;
+              _this.tip.close();
+              this.$alert("请求异常，服务器无响应", "错误", {
+                confirmButtonText: "确定",
+                type: "error",
+              });
+            })
+            .then((response) => {
+              let e = response.data;
+              if (e.status.id != 1 && e.status.id != 2) {
+                _this.debugging = false;
+                if (e.status.id == 3) {
+                  // 正常运行
+                  _this.stdout = Base64.decode(e.stdout || ""); // 程序执行成功并返回结果与信息
+                  _this.stdout +=
+                    "\n\n<span style='color: #80848f; font-size: 12px'>time: " +
+                    parseFloat(e.time) * 1000 +
+                    " ms\nmemory: " +
+                    e.memory / 1000 +
+                    " MB</span>";
+                } else {
+                  console.log(e);
+                  if (e.status.id == 6) {
+                    // 编译错误
+                    _this.stdout = Base64.decode(e.compile_output);
+                  } else if (e.status.id == 11 || e.status.id == 5)
+                    // 段错误或超时
+                    // runtime error
+                    _this.stdout = e.status.description;
+                  else _this.stdout = Base64.decode(e.stderr);
+                }
+              } else {
+                setTimeout(() => {
+                  _this.getResult(token);
+                }, 1000);
+              }
+            });
+        }, 1000);
       },
       submitCode () {
         if (this.code.trim() === '') {

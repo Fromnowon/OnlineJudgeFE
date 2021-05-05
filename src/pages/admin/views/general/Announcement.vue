@@ -81,7 +81,7 @@
           </el-input>
         </el-form-item>
         <el-form-item :label="$t('m.Announcement_Content')" required>
-          <Simditor v-model="announcement.content"></Simditor>
+          <VMEditor v-model="announcement.content"/>
         </el-form-item>
         <div class="visible-box">
           <span>{{$t('m.Announcement_visible')}}</span>
@@ -101,13 +101,14 @@
 </template>
 
 <script>
-  import Simditor from '../../components/Simditor.vue'
+  import VMEditor from '../../components/VMEditor'
   import api from '../../api.js'
-
+  import utils from '@/utils/utils'
+  
   export default {
     name: 'Announcement',
     components: {
-      Simditor
+      VMEditor
     },
     data () {
       return {
@@ -195,7 +196,7 @@
           data = {
             id: this.currentAnnouncementId,
             title: this.announcement.title,
-            content: this.announcement.content,
+            content: utils.html_encode(this.announcement.content),
             visible: this.announcement.visible
           }
         }
@@ -231,24 +232,27 @@
       },
       openAnnouncementDialog (id) {
         this.showEditAnnouncementDialog = true
-        if (id !== null) {
-          this.currentAnnouncementId = id
-          this.announcementDialogTitle = 'Edit Announcement'
-          this.announcementList.find(item => {
-            if (item.id === this.currentAnnouncementId) {
-              this.announcement.title = item.title
-              this.announcement.visible = item.visible
-              this.announcement.content = item.content
-              this.mode = 'edit'
+        // 组件渲染完毕再更新数据
+        this.$nextTick(() => {
+          if (id !== null) {
+            this.currentAnnouncementId = id
+            this.announcementDialogTitle = 'Edit Announcement'
+            this.announcementList.find(item => {
+              if (item.id === this.currentAnnouncementId) {
+                this.announcement.title = item.title
+                this.announcement.visible = item.visible
+                this.announcement.content = item.content
+                this.mode = 'edit'
+              }
+            })
+            } else {
+              this.announcementDialogTitle = 'Create Announcement'
+              this.announcement.title = ''
+              this.announcement.visible = true
+              this.announcement.content = ''
+              this.mode = 'create'
             }
-          })
-        } else {
-          this.announcementDialogTitle = 'Create Announcement'
-          this.announcement.title = ''
-          this.announcement.visible = true
-          this.announcement.content = ''
-          this.mode = 'create'
-        }
+        })
       },
       handleVisibleSwitch (row) {
         this.mode = 'edit'

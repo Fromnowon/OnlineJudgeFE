@@ -18,6 +18,42 @@ import Save from './components/btn/Save.vue'
 import Cancel from './components/btn/Cancel.vue'
 import './style.less'
 
+// 编辑器
+import VueMarkdownEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index'
+import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
+import createTipPlugin from '@kangc/v-md-editor/lib/plugins/tip/index';
+import '@kangc/v-md-editor/lib/plugins/tip/tip.css';
+import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
+
+// 按需引入 highlightjs 的语言包，此处以 json 为例
+import json from 'highlight.js/lib/languages/json';
+import cpp from 'highlight.js/lib/languages/cpp';
+import java from 'highlight.js/lib/languages/java';
+import python from 'highlight.js/lib/languages/python';
+
+VueMarkdownEditor.use(createLineNumbertPlugin());
+VueMarkdownEditor.use(createEmojiPlugin());
+VueMarkdownEditor.use(createTipPlugin());
+VueMarkdownEditor.use(createKatexPlugin());
+
+VueMarkdownEditor.use(githubTheme, {
+  extend(md, hljs) {
+    // md为 markdown-it 实例，可以在此处进行修改配置,并使用 plugin 进行语法扩展
+    // md.set(option).use(plugin);
+    // 注册语言包
+    hljs.registerLanguage('json', json);
+    hljs.registerLanguage('cpp', cpp);
+    hljs.registerLanguage('java', java);
+    hljs.registerLanguage('python', python);
+  },
+});
+Vue.use(VueMarkdownEditor)
+
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

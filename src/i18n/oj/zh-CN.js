@@ -225,8 +225,7 @@ export const m = {
   Your_password_has_been_reset: '您的密码已重置',
   // Save.vue
   Save: '保存',
-  // Simditor.vue
-  Uploading_is_in_progress: '正在上传，您确定要离开当前页面吗？',
+
   // SubmissionDetails.vue
   Lang: '语言',
   Share: '分享',

@@ -225,8 +225,6 @@ export const m = {
   Your_password_has_been_reset: 'Your password has been reset.',
   // Save.vue
   Save: 'Save',
-  // Simditor.vue
-  Uploading_is_in_progress: 'Uploading is in progress, are you sure to leave this page?',
   // SubmissionDetails.vue
   Lang: 'Lang',
   Share: 'Share',

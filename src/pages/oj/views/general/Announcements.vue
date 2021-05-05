@@ -32,7 +32,8 @@
       </template>
 
       <template v-else>
-        <div v-katex v-html="announcement.content" key="content" class="content-container markdown-body"></div>
+        <!-- <div v-katex v-html="announcement.content" key="content" class="content-container markdown-body"></div> -->
+        <v-md-editor :value="htmlDecode(announcement.content)" mode="preview" key="content"></v-md-editor>
       </template>
     </transition-group>
   </Panel>
@@ -41,6 +42,7 @@
 <script>
   import api from '@oj/api'
   import Pagination from '@oj/components/Pagination'
+  import utils from '@/utils/utils'
 
   export default {
     name: 'Announcement',
@@ -67,6 +69,9 @@
         } else {
           this.getAnnouncementList()
         }
+      },
+      htmlDecode (s) {
+        return utils.html_decode(s)
       },
       getAnnouncementList (page = 1) {
         this.btnLoading = true

@@ -19,19 +19,19 @@
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item prop="description" :label="$t('m.Description')" required>
-              <Simditor v-model="problem.description"></Simditor>
+              <VMEditor v-model="problem.description"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item prop="input_description" :label="$t('m.Input_Description')" required>
-              <Simditor v-model="problem.input_description"></Simditor>
+              <VMEditor v-model="problem.input_description"/>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item prop="output_description" :label="$t('m.Output_Description')" required>
-              <Simditor v-model="problem.output_description"></Simditor>
+              <VMEditor v-model="problem.output_description"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -148,7 +148,7 @@
           </button>
         </div>
         <el-form-item style="margin-top: 20px" :label="$t('m.Hint')">
-          <Simditor v-model="problem.hint" placeholder=""></Simditor>
+          <VMEditor v-model="problem.hint"/>
         </el-form-item>
         <el-form-item :label="$t('m.Code_Template')">
           <el-row>
@@ -266,17 +266,18 @@
 </template>
 
 <script>
-  import Simditor from '../../components/Simditor'
   import Accordion from '../../components/Accordion'
   import CodeMirror from '../../components/CodeMirror'
+  import VMEditor from '../../components/VMEditor'
   import api from '../../api'
+  import utils from '@/utils/utils'
 
   export default {
     name: 'Problem',
     components: {
-      Simditor,
       Accordion,
-      CodeMirror
+      CodeMirror,
+      VMEditor
     },
     data () {
       return {
@@ -575,6 +576,12 @@
         if (funcName === 'editContestProblem') {
           this.problem.contest_id = this.contest.id
         }
+
+        this.problem.description = utils.html_encode(this.problem.description)
+        this.problem.input_description = utils.html_encode(this.problem.input_description)
+        this.problem.output_description = utils.html_encode(this.problem.output_description)
+        this.problem.hint = utils.html_encode(this.problem.hint)
+
         api[funcName](this.problem).then(res => {
           if (this.routeName === 'create-contest-problem' || this.routeName === 'edit-contest-problem') {
             this.$router.push({name: 'contest-problem-list', params: {contestId: this.$route.params.contestId}})
