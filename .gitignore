@@ -68,3 +68,4 @@ test.vue
 vendor-manifest.json
 vendor.dll*.js
 
+config/index.js

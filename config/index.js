@@ -2,7 +2,7 @@
 // Template version: 1.1.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-process.env.TARGET = 'http://oj.zzh.today/'
+process.env.TARGET = 'http://oj.zzh.today/' // win下指定后端
 
 const path = require('path')
 const commonProxy = {
