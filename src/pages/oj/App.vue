@@ -57,16 +57,9 @@
 </script>
 
 <style lang="less">
-  .katex {
-    text-align: left !important;
-  }
   img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 1000px;
   }
-
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

@@ -10,7 +10,7 @@
             <Button size="small" type="ghost" @click="getTestcase">数 据</Button>  
           </div>  
         </div>
-        <div id="problem-content" class="markdown-body" v-katex>
+        <div id="problem-content">
           <p class="title">{{$t('m.Description')}}</p>
           <!-- <p class="content" v-html=problem.description></p> -->
           <v-md-editor :value="htmlDecode(problem.description)" mode="preview"></v-md-editor>
@@ -691,8 +691,10 @@
       pre {
         flex: 1 1 auto;
         align-self: stretch;
-        border-style: solid;
         background: transparent;
+        padding: 0 10px;
+        line-height: 30px;
+        border: 1px solid rgba(211, 211, 211, 0.8);
       }
     }
   }
@@ -760,4 +762,3 @@
     height: 480px;
   }
 </style>
-

@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <el-dialog :title="$t('m.Latex_Editor')" :visible.sync="katexVisible">
+    <el-dialog :title="'katex语法帮助'" :visible.sync="katexVisible">
       <KatexEditor></KatexEditor>
     </el-dialog>
   </div>

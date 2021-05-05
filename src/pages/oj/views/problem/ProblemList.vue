@@ -299,3 +299,8 @@
     margin-top: 10px;
   }
 </style>
+<style>
+  .ivu-input-icon {
+    line-height: 32px !important;
+  }
+</style>

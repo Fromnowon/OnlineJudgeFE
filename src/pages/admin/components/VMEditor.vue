@@ -3,9 +3,9 @@
     <v-md-editor
       class="editor"
       v-model="currentValue"
-      height="400px"
+      height="600px"
       :disabled-menus="[]"
-      left-toolbar="undo redo clear | h bold italic strikethrough | ol ul table hr | link image code emoji customToolbar"
+      left-toolbar="undo redo clear | h bold italic strikethrough | ol ul table hr | link image code emoji | customToolbar1"
       :toolbar="toolbar"
       @upload-image="handleUploadImage"
     ></v-md-editor>
@@ -14,7 +14,7 @@
 <script>
 // Local Registration
 import axios from "axios";
-import utils from '@/utils/utils'
+import utils from "@/utils/utils";
 
 export default {
   name: "VMEditor",
@@ -26,79 +26,147 @@ export default {
   },
   data() {
     this.toolbar = {
-      customToolbar: {
+      customToolbar1: {
         title: "Tips",
         icon: "v-md-icon-tip",
-        menus: [
-          {
-            name: "menu1",
-            text: "提示",
-            action(editor) {
-              editor.insert(function (selected) {
-                const prefix = "::: tip\n";
-                const suffix = "\n:::";
-                const placeholder = "请输入文本";
-                const content = selected || placeholder;
-
-                return {
-                  text: `${prefix}${content}${suffix}`,
-                  selected: content,
-                };
-              });
+        menus: {
+          mode: "panel",
+          itemWidth: "56px",
+          rowNum: 5,
+          items: [
+            {
+              name: "menu0",
+              text: "Tip：",
+              action(editor) {
+              },
             },
-          },
-          {
-            name: "menu2",
-            text: "注意",
-            action(editor) {
-              editor.insert(function (selected) {
-                const prefix = "::: warning\n";
-                const suffix = "\n:::";
-                const placeholder = "请输入文本";
-                const content = selected || placeholder;
+            {
+              name: "menu1",
+              text: "提示",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "::: tip\n";
+                  const suffix = "\n:::";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
 
-                return {
-                  text: `${prefix}${content}${suffix}`,
-                  selected: content,
-                };
-              });
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
             },
-          },
-          {
-            name: "menu3",
-            text: "警告",
-            action(editor) {
-              editor.insert(function (selected) {
-                const prefix = "::: danger\n";
-                const suffix = "\n:::";
-                const placeholder = "请输入文本";
-                const content = selected || placeholder;
+            {
+              name: "menu2",
+              text: "注意",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "::: warning\n";
+                  const suffix = "\n:::";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
 
-                return {
-                  text: `${prefix}${content}${suffix}`,
-                  selected: content,
-                };
-              });
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
             },
-          },
-          {
-            name: "menu4",
-            text: "详情",
-            action(editor) {
-              editor.insert(function (selected) {
-                const prefix = "::: details\n";
-                const suffix = "\n:::";
-                const placeholder = "请输入文本";
-                const content = selected || placeholder;
+            {
+              name: "menu3",
+              text: "警告",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "::: danger\n";
+                  const suffix = "\n:::";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
 
-                return {
-                  text: `${prefix}${content}${suffix}`,
-                  selected: content,
-                };
-              });
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
             },
-          },
-        ],
+            {
+              name: "menu4",
+              text: "详情",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "::: details\n";
+                  const suffix = "\n:::";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+            {
+              name: "menu5",
+              text: "快捷：",
+              action(editor) {
+              },
+            },
+            {
+              name: "menu6",
+              text: "上标",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "<sup>";
+                  const suffix = "</sup>";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+            {
+              name: "menu7",
+              text: "下标",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "<sub>";
+                  const suffix = "</sub>";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+            {
+              name: "menu8",
+              text: "颜色",
+              action(editor) {
+                editor.insert(function (selected) {
+                  const prefix = "<span style='color: red'>";
+                  const suffix = "</span>";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
+
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
+            },
+          ],
+        },
       },
     };
     return {
@@ -140,6 +208,8 @@ export default {
     value(val) {
       if (this.currentValue !== val) {
         this.currentValue = utils.html_decode(val);
+        console.log(utils.html_decode(val))
+        console.log(val)
       }
     },
     currentValue(newVal, oldVal) {
@@ -152,9 +222,6 @@ export default {
 };
 </script>
 <style scoped>
-.main {
-  height: 500px;
-}
 .editor {
   height: 100%;
   border: 1px solid rgba(211, 211, 211, 0.5) !important;
