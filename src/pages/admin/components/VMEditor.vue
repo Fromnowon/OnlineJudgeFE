@@ -114,11 +114,11 @@ export default {
             },
             {
               name: "menu6",
-              text: "上标",
+              text: "颜色",
               action(editor) {
                 editor.insert(function (selected) {
-                  const prefix = "<sup>";
-                  const suffix = "</sup>";
+                  const prefix = " ${\\color{Red}";
+                  const suffix = "}$ ";
                   const placeholder = "请输入文本";
                   const content = selected || placeholder;
 
@@ -131,46 +131,23 @@ export default {
             },
             {
               name: "menu7",
-              text: "下标",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = "<sub>";
-                  const suffix = "</sub>";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu8",
-              text: "颜色",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = "<span style='color: red'>";
-                  const suffix = "</span>";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu9",
               text: "重制",
               action(editor) {
                 var converter = document.createElement("DIV");
                 converter.innerHTML = editor.value;
                 editor.value = converter.innerText;
                 converter = null;
+              },
+            },
+            {
+              name: "menu8",
+              text: "",
+              action(editor) {}
+            },
+            {
+              name: "menu9",
+              text: "",
+              action(editor) {
               },
             },
             {
