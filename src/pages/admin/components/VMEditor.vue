@@ -29,7 +29,7 @@ export default {
     this.toolbar = {
       code2: {
         title: "代码样式",
-        icon: "fa fa-code-fork",
+        icon: "iconfont zzh-icon-code",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " `";
@@ -46,7 +46,7 @@ export default {
       },
       indent: {
         title: "缩进",
-        icon: "fa fa-indent",
+        icon: "iconfont zzh-icon-suojin1",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = "&emsp;";
@@ -63,7 +63,7 @@ export default {
       },
       sup: {
         title: "上标",
-        icon: "fa fa-superscript",
+        icon: "iconfont zzh-icon-shangbiao",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " ^";
@@ -80,7 +80,7 @@ export default {
       },
       sub: {
         title: "下标",
-        icon: "fa fa-subscript",
+        icon: "iconfont zzh-icon-xiabiao",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " _";
@@ -97,7 +97,7 @@ export default {
       },
       format: {
         title: "格式化",
-        icon: "fa fa-bolt",
+        icon: "iconfont zzh-icon-formatpainter",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " $";
@@ -114,7 +114,7 @@ export default {
       },
       color: {
         title: "颜色",
-        icon: "fa fa-font",
+        icon: "iconfont zzh-icon-zitiyanse1",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " ${\\color{Red}";
