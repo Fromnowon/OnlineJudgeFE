@@ -5,7 +5,7 @@
       v-model="currentValue"
       height="600px"
       :disabled-menus="[]"
-      left-toolbar="undo redo clear | h bold italic strikethrough | ol ul table hr | link image code emoji | customToolbar1"
+      left-toolbar="undo redo clear | h color bold  italic strikethrough | format code2 sup sub | indent ol ul table hr | link image code emoji tips | reset "
       :toolbar="toolbar"
       @upload-image="handleUploadImage"
     ></v-md-editor>
@@ -25,200 +25,192 @@ export default {
     },
   },
   data() {
-    const vm = this
+    const vm = this;
     this.toolbar = {
-      customToolbar1: {
-        title: "Tips",
-        icon: "fa fa-location-arrow",
-        menus: {
-          mode: "panel",
-          itemWidth: "56px",
-          rowNum: 5,
-          items: [
-            {
-              name: "menu0",
-              text: "Tip：",
-              action(editor) {},
-            },
-            {
-              name: "menu1",
-              text: "提示",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = "::: tip\n";
-                  const suffix = "\n:::";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
+      code2: {
+        title: "代码样式",
+        icon: "fa fa-code-fork",
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = " `";
+            const suffix = "` ";
+            const placeholder = "请输入文本";
+            const content = selected || placeholder;
 
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu2",
-              text: "注意",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = "::: warning\n";
-                  const suffix = "\n:::";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu3",
-              text: "警告",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = "::: danger\n";
-                  const suffix = "\n:::";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu4",
-              text: "详情",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = "::: details\n";
-                  const suffix = "\n:::";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu5",
-              text: "快捷：",
-              action(editor) {},
-            },
-            {
-              name: "menu6",
-              text: "颜色",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = " ${\\color{Red}";
-                  const suffix = "}$ ";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu7",
-              text: "代码",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = " ```";
-                  const suffix = "``` ";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu8",
-              text: "重制",
-              action(editor) {
-                var converter = document.createElement("DIV");
-                converter.innerHTML = editor.value;
-                vm.currentValue = converter.innerText
-              },
-            },
-            {
-              name: "menu9",
-              text: "",
-              action(editor) {},
-            },
-            {
-              name: "menu10",
-              text: "Katex：",
-              action() {},
-            },
-            {
-              name: "menu11",
-              text: "行内",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = " $";
-                  const suffix = "$ ";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu12",
-              text: "上标",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = " ^";
-                  const suffix = "^ ";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-            {
-              name: "menu12",
-              text: "下标",
-              action(editor) {
-                editor.insert(function (selected) {
-                  const prefix = " _";
-                  const suffix = "_ ";
-                  const placeholder = "请输入文本";
-                  const content = selected || placeholder;
-
-                  return {
-                    text: `${prefix}${content}${suffix}`,
-                    selected: content,
-                  };
-                });
-              },
-            },
-          ],
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
         },
+      },
+      indent: {
+        title: "缩进",
+        icon: "fa fa-indent",
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = "&emsp;";
+            const suffix = "";
+            const placeholder = "请输入文本";
+            const content = selected || placeholder;
+
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
+        },
+      },
+      sup: {
+        title: "上标",
+        icon: "fa fa-superscript",
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = " ^";
+            const suffix = "";
+            const placeholder = "请输入文本";
+            const content = selected || placeholder;
+
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
+        },
+      },
+      sub: {
+        title: "下标",
+        icon: "fa fa-subscript",
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = " _";
+            const suffix = "";
+            const placeholder = "请输入文本";
+            const content = selected || placeholder;
+
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
+        },
+      },
+      format: {
+        title: "格式化",
+        icon: "fa fa-bolt",
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = " $";
+            const suffix = "$ ";
+            const placeholder = "请输入文本";
+            const content = selected || placeholder;
+
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
+        },
+      },
+      color: {
+        title: "颜色",
+        icon: "fa fa-font",
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = " ${\\color{Red}";
+            const suffix = "}$ ";
+            const placeholder = "请输入文本";
+            const content = selected || placeholder;
+
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
+        },
+      },
+      reset: {
+        title: "重制",
+        icon: "fa fa-reply-all",
+        action(editor) {
+          var converter = document.createElement("DIV");
+          converter.innerHTML = editor.value;
+          vm.currentValue = converter.innerText;
+        },
+      },
+      tips: {
+        title: "Tips",
+        icon: "v-md-icon-tip",
+        menus: [
+          {
+            name: "menu1",
+            text: "提示",
+            action(editor) {
+              editor.insert(function (selected) {
+                const prefix = "\n::: tip\n";
+                const suffix = "\n:::\n";
+                const placeholder = "请输入文本";
+                const content = selected || placeholder;
+
+                return {
+                  text: `${prefix}${content}${suffix}`,
+                  selected: content,
+                };
+              });
+            },
+          },
+          {
+            name: "menu2",
+            text: "注意",
+            action(editor) {
+              editor.insert(function (selected) {
+                const prefix = "\n::: warning\n";
+                const suffix = "\n:::\n";
+                const placeholder = "请输入文本";
+                const content = selected || placeholder;
+
+                return {
+                  text: `${prefix}${content}${suffix}`,
+                  selected: content,
+                };
+              });
+            },
+          },
+          {
+            name: "menu3",
+            text: "警告",
+            action(editor) {
+              editor.insert(function (selected) {
+                const prefix = "\n::: danger\n";
+                const suffix = "\n:::\n";
+                const placeholder = "请输入文本";
+                const content = selected || placeholder;
+
+                return {
+                  text: `${prefix}${content}${suffix}`,
+                  selected: content,
+                };
+              });
+            },
+          },
+          {
+            name: "menu4",
+            text: "详情",
+            action(editor) {
+              editor.insert(function (selected) {
+                const prefix = "\n::: details\n";
+                const suffix = "\n:::\n";
+                const placeholder = "请输入文本";
+                const content = selected || placeholder;
+
+                return {
+                  text: `${prefix}${content}${suffix}`,
+                  selected: content,
+                };
+              });
+            },
+          },
+        ],
       },
     };
     return {
@@ -228,7 +220,6 @@ export default {
   methods: {
     // 绑定@imgAdd event
     handleUploadImage(event, insertImage, files) {
-      console.log(files);
       // 第一步.将图片上传到服务器.
       var formdata = new FormData();
       formdata.append("image", files[0]);
