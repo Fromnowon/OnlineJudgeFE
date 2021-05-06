@@ -690,10 +690,9 @@
       pre {
         flex: 1 1 auto;
         align-self: stretch;
-        background: transparent;
+        background: rgba(211, 211, 211, 0.2);
         padding: 0 10px;
         line-height: 30px;
-        border: 1px solid rgba(211, 211, 211, 0.8);
       }
     }
   }

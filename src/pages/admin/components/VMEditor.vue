@@ -133,39 +133,28 @@ export default {
               name: "menu7",
               text: "代码",
               action(editor) {
-                const prefix = " ```";
-                const suffix = "``` ";
-                const placeholder = "请输入文本";
-                const content = selected || placeholder;
+                editor.insert(function (selected) {
+                  const prefix = " ```";
+                  const suffix = "``` ";
+                  const placeholder = "请输入文本";
+                  const content = selected || placeholder;
 
-                return {
-                  text: `${prefix}${content}${suffix}`,
-                  selected: content,
-                };
-              }
+                  return {
+                    text: `${prefix}${content}${suffix}`,
+                    selected: content,
+                  };
+                });
+              },
             },
             {
               name: "menu8",
-              text: "重制",
-              action(editor) {
-                console.log(editor)
-                var converter = document.createElement("DIV");
-                converter.innerHTML = editor.value;
-                editor.clear()
-                editor.insert(function () {
-                  return {
-                    text: `${converter.innerText}`
-                  };
-                });
-                converter = null;
-                console.log(editor)
-              },
+              text: "",
+              action(editor) {},
             },
             {
               name: "menu9",
               text: "",
-              action(editor) {
-              },
+              action(editor) {},
             },
             {
               name: "menu10",
@@ -264,7 +253,6 @@ export default {
   },
   watch: {
     value(val) {
-      console.log(12212)
       if (this.currentValue !== val) {
         this.currentValue = utils.html_decode(val);
       }
