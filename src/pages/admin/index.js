@@ -17,6 +17,7 @@ import IconBtn from './components/btn/IconBtn.vue'
 import Save from './components/btn/Save.vue'
 import Cancel from './components/btn/Cancel.vue'
 import './style.less'
+import 'font-awesome/css/font-awesome.min.css'
 
 // 编辑器
 import VueMarkdownEditor from '@kangc/v-md-editor';

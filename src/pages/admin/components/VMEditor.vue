@@ -28,7 +28,7 @@ export default {
     this.toolbar = {
       customToolbar1: {
         title: "Tips",
-        icon: "v-md-icon-tip",
+        icon: "fa fa-location-arrow",
         menus: {
           mode: "panel",
           itemWidth: "56px",
