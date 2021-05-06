@@ -25,6 +25,7 @@ export default {
     },
   },
   data() {
+    const vm = this
     this.toolbar = {
       customToolbar1: {
         title: "Tips",
@@ -148,8 +149,12 @@ export default {
             },
             {
               name: "menu8",
-              text: "",
-              action(editor) {},
+              text: "重制",
+              action(editor) {
+                var converter = document.createElement("DIV");
+                converter.innerHTML = editor.value;
+                vm.currentValue = converter.innerText
+              },
             },
             {
               name: "menu9",
@@ -276,5 +281,8 @@ export default {
 <style>
 .v-md-editor__preview-wrapper {
   background: rgba(211, 211, 211, 0.2);
+}
+.v-md-editor__toolbar-item {
+  line-height: 28px !important;
 }
 </style>
