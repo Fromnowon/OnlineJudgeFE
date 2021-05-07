@@ -60,16 +60,16 @@
       </Panel>
       <!--problem main end-->
       <Card :padding="20" id="submit-code" dis-hover>
-        <!-- <CodeMirror :value.sync="code"
+        <CodeMirror 
+                    v-if="codeMirror"
+                    :value.sync="code"
                     :languages="problem.languages"
                     :language="language"
                     :theme="theme"
                     @resetCode="onResetToTemplate"
                     @changeTheme="onChangeTheme"
-                    @changeLang="onChangeLang"></CodeMirror> -->
-        <div style="position: relative">
-          <MonacoEditor v-model="code" @changeLang="onChangeLang" />
-        </div>
+                    @changeLang="onChangeLang"></CodeMirror>
+        <MonacoEditor v-else v-model="code" @changeLang="onChangeLang" @codeMirror='handleEditor' />
         <Row type="flex" justify="space-between">
           <Col :span="10">
             <div class="status" v-if="statusVisible">
@@ -303,7 +303,8 @@
         largePieInitOpts: {
           width: '500',
           height: '480'
-        }
+        },
+        codeMirror: false
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -324,6 +325,9 @@
     },
     methods: {
       ...mapActions(['changeDomTitle']),
+      handleEditor (v) {
+        this.codeMirror = v
+      },
       htmlDecode (s) {
         return utils.html_decode(s)
       },

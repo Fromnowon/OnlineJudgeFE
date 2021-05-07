@@ -14,6 +14,13 @@
       <Checkbox style="float: right; margin-right: 0" v-model="darkMode"
         >深色</Checkbox
       >
+      <Button
+        @click="useCodeMirror"
+        style="float: right; margin-right: 10px"
+        type="text"
+      >
+        CodeMirror
+      </Button>
     </div>
     <MonacoEditor
       class="editor"
@@ -54,11 +61,8 @@ export default {
       options: {
         fontSize: 16,
         tabSize: 4,
-        minimap: {
-          enabled: false, // 不要小地图
-        },
       },
-      copied: "",
+      codeMirror: false,
     };
   },
   mounted() {
@@ -96,6 +100,9 @@ export default {
     onChange(value, event) {
       this.$emit("input", value);
     },
+    useCodeMirror() {
+      this.$emit("codeMirror", true);
+    },
   },
   watch: {
     value(v) {
@@ -112,7 +119,7 @@ export default {
 
 <style lang='less' scoped>
 .main {
-  margin-bottom: 10px;
+  margin: 10px 0 20px;
   .lang-sel {
     width: 100px;
   }
@@ -123,8 +130,7 @@ export default {
   }
 }
 .editor {
-  border: 1px solid rgba(211, 211, 211, 0.5);
-  box-shadow: 0 2px 12px 0 rgba(211, 211, 211, 0.3);
+  border: 2px solid rgba(211, 211, 211, 0.8);
   width: 100%;
   height: 600px;
 }
