@@ -700,6 +700,7 @@
         flex: 1 1 auto;
         align-self: stretch;
         background: rgba(211, 211, 211, 0.2);
+        border-radius: 4px;
         padding: 0 10px;
         line-height: 30px;
       }
