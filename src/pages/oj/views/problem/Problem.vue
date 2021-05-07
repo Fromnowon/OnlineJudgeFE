@@ -60,13 +60,16 @@
       </Panel>
       <!--problem main end-->
       <Card :padding="20" id="submit-code" dis-hover>
-        <CodeMirror :value.sync="code"
+        <!-- <CodeMirror :value.sync="code"
                     :languages="problem.languages"
                     :language="language"
                     :theme="theme"
                     @resetCode="onResetToTemplate"
                     @changeTheme="onChangeTheme"
-                    @changeLang="onChangeLang"></CodeMirror>
+                    @changeLang="onChangeLang"></CodeMirror> -->
+        <div style="position: relative">
+          <MonacoEditor v-model="code" @changeLang="onChangeLang" />
+        </div>
         <Row type="flex" justify="space-between">
           <Col :span="10">
             <div class="status" v-if="statusVisible">
@@ -227,6 +230,7 @@
   import {mapGetters, mapActions} from 'vuex'
   import {types} from '../../../../store'
   import CodeMirror from '@oj/components/CodeMirror.vue'
+  import MonacoEditor from '@oj/components/MonacoEditor.vue'
   import storage from '@/utils/storage'
   import {FormMixin} from '@oj/components/mixins'
   import {JUDGE_STATUS, CONTEST_STATUS, buildProblemCodeKey} from '@/utils/constants'
@@ -253,7 +257,8 @@
   export default {
     name: 'Problem',
     components: {
-      CodeMirror
+      CodeMirror,
+      MonacoEditor
     },
     mixins: [FormMixin],
     data () {

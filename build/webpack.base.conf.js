@@ -6,6 +6,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
+const MonacoEditorPlugin = require('monaco-editor-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -119,5 +120,13 @@ module.exports = {
       files: ['index.html', 'admin/index.html'],
       append: false
     }),
+    new MonacoEditorPlugin({
+      // https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+      // Include a subset of languages support
+      // Some language extensions like typescript are so huge that may impact build performance
+      // e.g. Build full languages support with webpack 4.0 takes over 80 seconds
+      // Languages are loaded on demand at runtime
+      languages: ['c', 'cpp', 'go', 'java', 'python']
+    })
   ]
 }
