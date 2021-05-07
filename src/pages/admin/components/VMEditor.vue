@@ -5,7 +5,7 @@
       v-model="currentValue"
       height="600px"
       :disabled-menus="[]"
-      left-toolbar="undo redo clear | h color bold  italic strikethrough | format code2 sup sub | indent ol ul table hr | link image code emoji tips | reset "
+      left-toolbar="undo redo clear | h color bold italic strikethrough | format code2 sup sub | indent ol ul table hr | link image code emoji tips | reset "
       :toolbar="toolbar"
       @upload-image="handleUploadImage"
     ></v-md-editor>
@@ -28,7 +28,7 @@ export default {
     const vm = this;
     this.toolbar = {
       code2: {
-        title: "代码样式",
+        title: "行内代码",
         icon: "iconfont zzh-icon-code",
         action(editor) {
           editor.insert(function (selected) {
@@ -63,7 +63,7 @@ export default {
       },
       sup: {
         title: "上标",
-        icon: "iconfont zzh-icon-shangbiao",
+        icon: "iconfont zzh-icon-superscript",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " ^";
@@ -80,7 +80,7 @@ export default {
       },
       sub: {
         title: "下标",
-        icon: "iconfont zzh-icon-xiabiao",
+        icon: "iconfont zzh-icon-subscript",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " _";
@@ -96,8 +96,8 @@ export default {
         },
       },
       format: {
-        title: "格式化",
-        icon: "iconfont zzh-icon-formatpainter",
+        title: "公式化",
+        icon: "iconfont zzh-icon-functions",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " $";
@@ -114,7 +114,7 @@ export default {
       },
       color: {
         title: "颜色",
-        icon: "iconfont zzh-icon-zitiyanse1",
+        icon: "iconfont zzh-icon-font-color",
         action(editor) {
           editor.insert(function (selected) {
             const prefix = " ${\\color{Red}";
@@ -131,7 +131,7 @@ export default {
       },
       reset: {
         title: "重制",
-        icon: "fa fa-reply-all",
+        icon: "iconfont zzh-icon-text-wrap",
         action(editor) {
           var converter = document.createElement("DIV");
           converter.innerHTML = editor.value;
