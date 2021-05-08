@@ -26,4 +26,21 @@
     bottom: 0;
     width: 100%;
   }
+  .v-md-plugin-tip p {
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+  }
+
+  .github-markdown-body {
+    line-height: 2 !important;
+  }
+
+  .github-markdown-body > :first-child,
+  .github-markdown-body > :first-child > :first-child {
+    margin-top: 0 !important;
+  }
+
+  img {
+    max-width: 1000px !important;
+  }
 </style>
