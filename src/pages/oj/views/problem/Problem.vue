@@ -7,7 +7,8 @@
           {{problem.title}}
           <div style="float: right" v-if="isAdminRole">
             <Button type="primary" size="small" @click="goEdit">编 辑</Button>
-            <Button size="small" type="ghost" @click="getTestcase">数 据</Button>  
+            <Button size="small" type="ghost" @click="getTestcase">数 据</Button>
+            <Button size="small" type="ghost" @click="nextProblem">下一题</Button>
           </div>  
         </div>
         <div id="problem-content">
@@ -333,6 +334,9 @@
       },
       goEdit () {
         window.open('/admin/problem/edit/' + this.problem.id, '_blank')
+      },
+      nextProblem () {
+        this.$router.push(`/problem/` + (parseInt(this.$route.params.problemID) + 1))
       },
       getTestcase () {
         let url = '/admin/test_case?problem_id=' + this.problem.id

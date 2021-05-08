@@ -43,8 +43,8 @@ import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import createTipPlugin from '@kangc/v-md-editor/lib/plugins/tip/index';
 import '@kangc/v-md-editor/lib/plugins/tip/tip.css';
 
-// 按需引入 highlightjs 的语言包，此处以 json 为例
-import json from 'highlight.js/lib/languages/json';
+// 按需引入 highlightjs 的语言包
+import go from 'highlight.js/lib/languages/go';
 import cpp from 'highlight.js/lib/languages/cpp';
 import java from 'highlight.js/lib/languages/java';
 import python from 'highlight.js/lib/languages/python';
@@ -60,7 +60,7 @@ VueMarkdownEditor.use(githubTheme, {
     // md为 markdown-it 实例，可以在此处进行修改配置,并使用 plugin 进行语法扩展
     // md.set(option).use(plugin);
     // 注册语言包
-    hljs.registerLanguage('json', json);
+    hljs.registerLanguage('go', go);
     hljs.registerLanguage('cpp', cpp);
     hljs.registerLanguage('java', java);
     hljs.registerLanguage('python', python);
