@@ -19,11 +19,10 @@ function html_decode(str = "")
   s = s.replace(/&lt;/g, "<"); 
   s = s.replace(/&gt;/g, ">"); 
   // s = s.replace(/&nbsp;/g, " ");
-  s = s.replace(/&#96;/g, '\`')
-  s = s.replace(/&#39;/g, "\'"); 
+  s = s.replace(/&#.96;/g, '\`')
+  s = s.replace(/&#.39;/g, "\'"); 
   s = s.replace(/&quot;/g, "\""); 
-  s = s.replace(/<br\/>/g, "\n"); 
-  s = s.replace(/<br \/>/g, "\n");
+  s = s.replace(/<br.\/>/g, "\n"); 
   s = s.replace(/\\\\/g, "\\"); 
   return s; 
 } 

@@ -24,6 +24,7 @@
     </div>
     <MonacoEditor
       class="editor"
+      :style="{ height: height + 'px' }"
       ref="editor"
       v-model="code"
       @change="onChange"
@@ -58,6 +59,7 @@ export default {
       },
       langs_: [],
       darkMode: false,
+      height: 400,
       options: {
         fontSize: 16,
         tabSize: 4,
@@ -66,6 +68,9 @@ export default {
         foldingHighlight: true, // 折叠等高线
         foldingStrategy: "indentation", // 折叠方式  auto | indentation
         lineNumbersMinChars: 4,
+        scrollbar: {
+          alwaysConsumeMouseWheel: false, // 是否接管滚动事件
+        },
         minimap: {
           enabled: false, // 不要小地图
         },
@@ -86,10 +91,13 @@ export default {
   methods: {
     onEditorDidMount() {
       let editor = this.$refs.editor.getEditor();
+
       editor.focus();
+
       window.onresize = () => {
         editor.layout();
       };
+
       editor.addAction({
         id: "tip",
         label: "粘贴请按 Ctrl + V",
@@ -101,6 +109,13 @@ export default {
           });
         },
       });
+
+      editor.onDidContentSizeChange(() => {
+        this.resieze(editor);
+      });
+    },
+    resieze(editor) {
+      this.height = Math.min(800, Math.max(400, editor.getContentHeight()));
     },
     onLangChange(newVal) {
       this.$emit("changeLang", newVal);
@@ -113,13 +128,18 @@ export default {
     },
   },
   watch: {
-    value(v) {
-      this.$nextTick(() => {
-        this.code = v;
-      });
-    },
     darkMode(v) {
       this.theme = v ? "vs-dark" : "vs";
+    },
+    height() {
+      this.$nextTick(() => {
+        this.$refs.editor.getEditor().layout();
+      });
+    },
+    value(v) {
+      this.$nextTick(() => {
+        this.code = v || "";
+      });
     },
   },
 };
@@ -140,14 +160,10 @@ export default {
 .editor {
   border: 2px solid rgba(211, 211, 211, 0.8);
   width: 100%;
-  height: 600px;
 }
 </style>
   <style>
 .action-label.codicon.separator.disabled {
   display: none !important;
-}
-.margin-view-overlays {
-  background: #f2f6fc8c;
 }
 </style>
