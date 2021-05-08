@@ -61,6 +61,14 @@ export default {
       options: {
         fontSize: 16,
         tabSize: 4,
+        scrollBeyondLastLine: false,
+        folding: true, // 是否折叠
+        foldingHighlight: true, // 折叠等高线
+        foldingStrategy: "indentation", // 折叠方式  auto | indentation
+        lineNumbersMinChars: 4,
+        minimap: {
+          enabled: false, // 不要小地图
+        },
       },
       codeMirror: false,
     };
@@ -138,5 +146,8 @@ export default {
   <style>
 .action-label.codicon.separator.disabled {
   display: none !important;
+}
+.margin-view-overlays {
+  background: #f2f6fc8c;
 }
 </style>
