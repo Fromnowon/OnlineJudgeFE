@@ -98,19 +98,49 @@ export default {
       format: {
         title: "公式化",
         icon: "iconfont zzh-icon-functions",
-        action(editor) {
-          editor.insert(function (selected) {
-            const prefix = " $";
-            const suffix = "$ ";
-            const placeholder = "请输入文本";
-            const content = selected || placeholder;
+        menus: [
+          {
+            name: "menu1",
+            text: "手动",
+            action(editor) {
+              editor.insert(function (selected) {
+                const prefix = " $";
+                const suffix = "$ ";
+                const placeholder = "请输入文本";
+                const content = selected || placeholder;
 
-            return {
-              text: `${prefix}${content}${suffix}`,
-              selected: content,
-            };
-          });
-        },
+                return {
+                  text: `${prefix}${content}${suffix}`,
+                  selected: content,
+                };
+              });
+            },
+          },
+          {
+            name: "menu2",
+            text: "自动",
+            action(editor) {
+              editor.insert(function (selected) {
+                const currentValue = vm.currentValue;
+                let content = selected || currentValue;
+
+                content = content.replace(/(\w+)\s*/g, " \$$1\$ ");
+                if (selected == null) 
+                {
+                  vm.currentValue = content
+                  return {
+                    text: ``,
+                    selected: '',
+                  };
+                }
+                return {
+                  text: `${content}`,
+                  selected: content,
+                };
+              });
+            },
+          },
+        ],
       },
       color: {
         title: "颜色",
