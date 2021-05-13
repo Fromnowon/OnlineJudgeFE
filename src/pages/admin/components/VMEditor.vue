@@ -124,7 +124,7 @@ export default {
                 const currentValue = vm.currentValue;
                 let content = selected || currentValue;
 
-                content = content.replace(/(\w+)\s*/g, " \$$1\$ ");
+                content = content.replace(/(\w+)\s*/g, " \$$$1\$ ");
                 if (selected == null) 
                 {
                   vm.currentValue = content

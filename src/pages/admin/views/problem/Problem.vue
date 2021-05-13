@@ -344,7 +344,7 @@
           spj_compile_ok: false,
           test_case_id: '',
           test_case_score: [],
-          rule_type: 'ACM',
+          rule_type: 'OI',
           hint: '',
           source: '',
           io_mode: {'io_mode': 'Standard IO', 'input': 'input.txt', 'output': 'output.txt'}
@@ -607,7 +607,7 @@
       }
     }
     .input-new-tag {
-      width: 78px;
+      width: 150px;
     }
     .button-new-tag {
       height: 24px;

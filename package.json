@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "@kangc/v-md-editor": "^1.6.2",
+    "@kangc/v-md-editor": "^1.6.3",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "browser-detect": "^0.2.27",
